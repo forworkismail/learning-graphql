@@ -4,9 +4,15 @@ const { ApolloServer, gql } = require('apollo-server');
 const typeDefs = gql`
   type Query {
     hello: String
-    numberOfAnimals: Int
-    price: Float
-    isActive: Boolean
+    products: [Product!]!
+  }
+
+  type Product {
+    name: String!
+    description: String!
+    quantity: Int!
+    price: Float!
+    onSale: Boolean!
   }
 `;
 
@@ -15,14 +21,16 @@ const resolvers = {
     hello: () => {
       return 'World!';
     },
-    numberOfAnimals: () => {
-      return 3;
-    },
-    price: () => {
-      return 3.14;
-    },
-    isActive: () => {
-      return true;
+    products: () => {
+      return [
+        {
+          name: 'Product 1',
+          description: 'This is product 1',
+          quantity: 10,
+          price: 10.99,
+          onSale: true,
+        },
+      ];
     },
   },
 };
