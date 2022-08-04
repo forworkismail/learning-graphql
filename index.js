@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
+const { productsData } = require('./data');
 
 // Schema - Type Definitions
 const typeDefs = gql`
@@ -10,6 +11,7 @@ const typeDefs = gql`
   type Product {
     name: String!
     description: String!
+    image: String!
     quantity: Int!
     price: Float!
     onSale: Boolean!
@@ -22,15 +24,7 @@ const resolvers = {
       return 'World!';
     },
     products: () => {
-      return [
-        {
-          name: 'Product 1',
-          description: 'This is product 1',
-          quantity: 10,
-          price: 10.99,
-          onSale: true,
-        },
-      ];
+      return productsData;
     },
   },
 };
