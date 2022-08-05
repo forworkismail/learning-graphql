@@ -1,5 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
-const { productsData } = require('./data');
+const { productsData, categoriesData } = require('./data');
 
 // Schema - Type Definitions
 const typeDefs = gql`
@@ -7,15 +7,23 @@ const typeDefs = gql`
     hello: String
     products: [Product!]!
     product(id: ID!): Product
+    categories: [Category!]!
+    category(id: ID!): Category
   }
 
   type Product {
+    id: ID!
     name: String!
     description: String!
     image: String!
     quantity: Int!
     price: Float!
     onSale: Boolean!
+  }
+
+  type Category {
+    id: ID!
+    name: String!
   }
 `;
 
@@ -28,9 +36,13 @@ const resolvers = {
       return productsData;
     },
     product: (parent, { id }, context) => {
-      const product = productsData.find((product) => product.id === id);
-      if (!product) return null;
-      return product;
+      return productsData.find((product) => product.id === id);
+    },
+    categories: () => {
+      return categoriesData;
+    },
+    category: (parent, { id }, context) => {
+      return categoriesData.find((category) => category.id === id);
     },
   },
 };
